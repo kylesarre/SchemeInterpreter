@@ -1,10 +1,10 @@
 // singleton pattern
-public class RuntimeEnvironment extends Environment{
+public class GlobalEnvironment extends Environment{
 
 	public static Environment globalEnv = null;
 	
 	// constructs the builtIn environment, then wraps it with the file environment
-	private RuntimeEnvironment() {		
+	private GlobalEnvironment() {		
 		Environment builtIn = new Environment();
 		initBuiltIn(builtIn);
 		globalEnv = new Environment(builtIn);
@@ -13,7 +13,7 @@ public class RuntimeEnvironment extends Environment{
 	public static Environment getGlobalEnv() {
 		if(globalEnv == null) {
 			// sets a global pointer to the file environment
-			new RuntimeEnvironment();
+			new GlobalEnvironment();
 		}
 		// if the global pointer has been set, we simply return it
 		return globalEnv;

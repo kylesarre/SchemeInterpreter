@@ -6,7 +6,7 @@ class Cons extends Node {
     
     public Node eval(Environment env) throws Exception
     {
-      return this.form.eval(env, (Node) this);
+      return this.form.eval((Node) this, env);
     }
     
     // parseList() `parses' special forms, constructs an appropriate

@@ -51,7 +51,7 @@ public class Main {
 	
 	// Create parser
 	Parser parser = new Parser(scanner);
-	Environment fileEnv = RuntimeEnvironment.getGlobalEnv();
+	Environment fileEnv = GlobalEnvironment.getGlobalEnv();
 	System.out.print("> ");
 	// Parse and pretty-print each input expression
 	for (Node exp = parser.parseExp(); exp != null; exp = parser.parseExp())

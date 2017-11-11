@@ -12,4 +12,6 @@ class Define extends Special {
     void print(Node t, int n, boolean p) {
     	  Printer.printDefine(t, n, p);
     	  }
+    
+    // TODO: implement eval for define expressions
 }

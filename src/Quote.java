@@ -17,10 +17,7 @@ class Quote extends Special {
     {
       if (Helpers.getLength(exp) == 2)
         return exp.getCdr().getCar();
-      System.out.println("Error: invalid expression");
-      return (Node) Nil.getInstance();
+      System.out.println("Error: not a valid expression for Quote");
+      return new Nil();
     }
-
 }
-    
-

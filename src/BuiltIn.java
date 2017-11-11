@@ -126,7 +126,7 @@ class BuiltIn extends Node {
 			return new Nil();
 		}
 		else if("interaction-environment".equals(symbol.getSymbol())) {
-			return RuntimeEnvironment.getGlobalEnv();
+			return GlobalEnvironment.getGlobalEnv();
 		}
 		else {
 			throw new Exception("Error: unsupported zero param built-in");

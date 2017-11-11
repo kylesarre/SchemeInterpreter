@@ -7,7 +7,7 @@ import java.io.*;
 abstract class Special {
     abstract void print(Node t, int n, boolean p);
     
-    public Node eval(Environment env, Node node) throws Exception {
+    public Node eval(Node node, Environment env) throws Exception {
     	throw new Exception("Error: not a valid expression.");
     }
 }

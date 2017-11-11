@@ -15,7 +15,7 @@ class Regular extends Special {
     } 
     
     // assumption: the head of a regular list denotes a function call
-    public Node eval(Environment env, Node exp) throws Exception{
+    public Node eval(Node exp, Environment env) throws Exception{
     	if(Helpers.getLength(exp) >= 1) {
     		// scheme evaluates arguments before making the call, so lets evaluate each argument left to right
     		return exp.getCar().eval(env).apply(Helpers.evalArgs(exp.getCdr(), env));
