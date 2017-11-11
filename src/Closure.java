@@ -38,8 +38,12 @@ class Closure extends Node {
     // to report an error.  It should be overwritten only in classes
     // BuiltIn and Closure.
     public Node apply (Node args) throws Exception{
-    	Environment frame = new Environment(env); // call frame
+    	// somehow this isn't creating a call frame for us...
+    	// TODO: bugfix the call frame. bug: call frame is a duplication of the current environment when it should be a new one
+    	Environment frame = new Environment(this.env); // call frame
     	Node params = fun.getCdr().getCar(); // lambda parameters
+    	//TODO: bugfix this function body. somehow the correct arg list is surrounded by another cons which is causing error: not a valid procedure to occur.
+    	// must have made an error during construction of the lambda
     	Node body = fun.getCdr().getCdr().getCar(); // lambda body
     	while(!params.isNull()) {
     		if(!args.isNull()) {

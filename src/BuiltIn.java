@@ -81,6 +81,8 @@ class BuiltIn extends Node {
 		else if("procedure?".equals(symbol.getSymbol())) {
 			return BooleanLit.getInstance(arg1.isProcedure());
 		}
+		else if("pair?".equals(symbol.getSymbol()))
+			return BooleanLit.getInstance(arg1.isPair());
 		else if("write".equals(symbol.getSymbol())) {
 			arg1.print(-1);
 			return new Nil();
@@ -113,6 +115,21 @@ class BuiltIn extends Node {
 		else if("cons".equals(symbol.getSymbol())) {
 			return new Cons(arg1, arg2);
 		}
+		else if("set-car!".equals(symbol.getSymbol())) {
+			if(!arg1.isPair())
+				throw new Exception("Error: expected a pair but received a " + arg1.getName() +".");
+			arg1.setCar(arg2);
+			return Nil.getInstance();
+		}
+		else if("set-cdr!".equals(symbol.getSymbol())) {
+			if(!arg1.isPair())
+				throw new Exception("Error: expected a pair but received a " + arg1.getName() +".");
+			arg1.setCdr(arg2);
+			return Nil.getInstance();
+		}
+		// this might work strangely since I was inconsistent about returning pointers to pre-existing objects vs creating new objects (like with nil)
+		else if("eq?".equals(symbol.getSymbol()))
+			return BooleanLit.getInstance(arg1 == arg2);
 		else {
 			throw new Exception("Error: unsupported binary param built-in!");
 		}

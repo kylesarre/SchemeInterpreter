@@ -31,19 +31,19 @@ public class GlobalEnvironment extends Environment{
 				"<", //implemented
 				"car", //implemented
 				"cdr", //implemented
-				"cons",
-				"null?",
-				"pair?",
-				"eq?",
-				"procedure?",
+				"cons", // implemented
+				"null?", //implemented
+				"pair?", //implemented
+				"eq?", //implemented
+				"procedure?", //implemented
 				"read",
 				"write",
 				"display",
 				"load",
-				"newline",
-				"interaction-environment",
-				"set-car!",
-				"set-cdr!"};
+				"newline", //implemented
+				"interaction-environment", //implemented
+				"set-car!", //implemented
+				"set-cdr!"}; //implemented
 		for(String s: builtIns) {
 			builtIn.define(new Ident(s), new BuiltIn(new Ident(s)));
 		}

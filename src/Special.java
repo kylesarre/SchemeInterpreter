@@ -7,6 +7,14 @@ import java.io.*;
 abstract class Special {
     abstract void print(Node t, int n, boolean p);
     
+    //TODO: implement eval for all of the special keywords
+    // Define
+    // If
+    // Begin
+    // Set
+    // Let
+    // Closure
+    // Quote - Implemented
     public Node eval(Node node, Environment env) throws Exception {
     	throw new Exception("Error: not a valid expression.");
     }
