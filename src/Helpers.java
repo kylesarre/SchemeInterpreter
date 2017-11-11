@@ -2,11 +2,16 @@
 public class Helpers {
 	// returns the number of elements in the list; Nil terminated. 
 	public static int getLength(Node list) {
-		if(!list.isNull()) {
-    		return 1+getLength(list.getCdr());
+		// throws a null pointer exception if the list doesn't terminate with nil
+		if(list == null) {
+			return 0;
+		}
+		
+		if(list.isNull()) {
+			return 0;   		
     	}
     	else {
-    		return 0;
+    		return 1+getLength(list.getCdr());
     	}
 	}
 	

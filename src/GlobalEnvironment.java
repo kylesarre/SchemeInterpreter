@@ -21,11 +21,31 @@ public class GlobalEnvironment extends Environment{
 	
 	// creates an association list of the form (val, builtIn(val)) containing all built in functions for our scheme environment 
 	public void initBuiltIn(Environment builtIn) {
-		Ident add = new Ident("+");
-		builtIn.define(add, new BuiltIn(add));
-		Ident sub = new Ident("-");
-		builtIn.define(sub, new BuiltIn(sub));
-		Ident mul = new Ident("*");
-		builtIn.define(mul, new BuiltIn(mul));
+		// define all of the default built ins
+		String[] builtIns = {
+				"+", //implemented
+				"-", //implemented
+				"*", //implemented
+				"/", //implemented
+				"=", //implemented
+				"<", //implemented
+				"car", //implemented
+				"cdr", //implemented
+				"cons",
+				"null?",
+				"pair?",
+				"eq?",
+				"procedure?",
+				"read",
+				"write",
+				"display",
+				"load",
+				"newline",
+				"interaction-environment",
+				"set-car!",
+				"set-cdr!"};
+		for(String s: builtIns) {
+			builtIn.define(new Ident(s), new BuiltIn(new Ident(s)));
+		}
 	}
 }

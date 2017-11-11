@@ -110,6 +110,9 @@ class BuiltIn extends Node {
 		else if("<".equals(symbol.getSymbol())) {
 			return isLess(num(arg1), num(arg2));
 		}
+		else if("cons".equals(symbol.getSymbol())) {
+			return new Cons(arg1, arg2);
+		}
 		else {
 			throw new Exception("Error: unsupported binary param built-in!");
 		}
