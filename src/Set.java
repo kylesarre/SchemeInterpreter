@@ -13,4 +13,8 @@ class Set extends Special {
     void print(Node t, int n, boolean p) {
     	Printer.printSet(t, n, p);
     }
+    
+    public Node eval(Environment env, Node node) {
+    	return new Nil();
+    }
 }

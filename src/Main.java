@@ -51,15 +51,19 @@ public class Main {
 	
 	// Create parser
 	Parser parser = new Parser(scanner);
-	Node root;
-	
+	Environment fileEnv = RuntimeEnvironment.getGlobalEnv();
+	System.out.print("> ");
 	// Parse and pretty-print each input expression
-	
-	root = parser.parseExp();
-	while (root != null) {
-	    root.print(0);
-	    root = parser.parseExp();
-	}
+	for (Node exp = parser.parseExp(); exp != null; exp = parser.parseExp())
+    {
+	  try {
+		  exp.eval(fileEnv).print(0);}
+	  catch(Exception e) {
+		  e.printStackTrace();
+		  System.out.println();
+	  }
+      System.out.print("> ");
+    }
 	System.exit(0);
     }
     	

@@ -13,7 +13,7 @@ class Ident extends Node {
   public String getSymbol(){return name;}
   public String getName(){return name;}
   
-  public Node eval(Environment env)
+  public Node eval(Environment env) throws Exception
   {
     return env.lookup((Node) this);
   }

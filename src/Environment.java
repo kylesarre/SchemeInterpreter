@@ -71,11 +71,10 @@ class Environment extends Node {
 	}
     }
 
-    public Node lookup (Node id) {
+    public Node lookup (Node id) throws Exception{
 	Node val = find(id, scope);
 	if (val == null && env == null) {
-	    System.out.println("undefined variable");
-	    return null;
+	    throw new Exception("Undefined variable: "+ id.getName());
 	}
 	else if (val == null)
 	    // look up the identifier in the enclosing scope
@@ -98,11 +97,22 @@ class Environment extends Node {
     }
     
     public void mkPair(Node id, Node val) {
-    	Node list = scope;
-    	while(!list.isNull()) {
-    		list = list.getCdr();
+    	Node sTail = scope;
+    	
+    	if(scope.isNull()) {
+    		scope = new Cons(new Cons(id, new Cons(val, new Nil())), new Nil());
+    		sTail = scope.getCdr();
     	}
-    	list = new Cons(new Cons(id, new Cons(val, new Nil())), new Nil());
+    	
+    	while(!sTail.isNull()) {
+    		if(sTail.getCdr().isNull()) {
+    			sTail.setCdr(new Cons(new Cons(id, new Cons(val, new Nil())), new Nil()));   			
+    			sTail = new Nil(); //dangerous recursion occurs without
+    		}
+    		else {
+    			 sTail = sTail.getCdr();
+    		}  			
+    	}
     }
 
     public void assign (Node id, Node val) {

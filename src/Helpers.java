@@ -9,4 +9,14 @@ public class Helpers {
     		return 0;
     	}
 	}
+	
+	//returns a list with the results of evaluating each arg in the provided arg list
+	public static Node evalArgs(Node args, Environment env) throws Exception{
+		if(!args.isNull()) {
+    		return new Cons(args.getCar().eval(env), evalArgs(args.getCdr(), env));
+    	}
+    	else {
+    		return new Nil();
+    	}
+	}
 }

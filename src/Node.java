@@ -52,9 +52,14 @@ class Node {
   public void setCar(Node a) {}
   public void setCdr(Node d) {}
   
+  public  Node apply(Node args) throws Exception
+  {
+    throw new Exception("Error: not a procedure!");
+  }
+  
   // Implement this in each Node subtype.
   public Node eval(Environment env) throws Exception{
-	  throw new Exception("Error: not a valid expression.");
+	  throw new Exception("Error: not a valid expression!");
   }
   
   public String getName() { return ""; }
