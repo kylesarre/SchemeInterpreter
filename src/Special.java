@@ -11,10 +11,12 @@ abstract class Special {
     // Define - implemented
     // If - implemented
     // Begin - implemented
-    // Set
-    // Let
+    // Set - implemented
+    // Cond - implemented
+    // Let - implemented
     // Closure - implemented
     // Quote - Implemented
+    // lambda
     public Node eval(Node node, Environment env) throws Exception {
     	throw new Exception("Error: not a valid expression.");
     }

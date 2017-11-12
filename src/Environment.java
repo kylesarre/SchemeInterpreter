@@ -122,7 +122,7 @@ class Environment extends Node {
     	if(value == null && env == null) {
     		System.out.println("Error: undefined variable");
     	}
-    	else if(value == null && env != null)
+    	else if(value == null)
     		env.assign(id, val);
     	else {
     		value.setCar(val);

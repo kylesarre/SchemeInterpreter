@@ -14,7 +14,24 @@ class Set extends Special {
     	Printer.printSet(t, n, p);
     }
     
-    public Node eval(Environment env, Node node) {
-    	return new Nil();
+    public Node eval(Node node, Environment env) throws Exception{
+    	Node list = node.getCdr();
+    	Node temp = list;
+    	Node[] ids = new Node[Helpers.getLength(list) - 1];
+    	
+    	int counter = 0;
+    	while(!temp.getCdr().isNull()) {
+    		ids[counter] = temp.getCar();  
+    		temp = temp.getCdr();
+    		counter++;
+    	}
+    	Node exp = temp.getCar();
+    	Node result = exp.eval(env);
+    	
+    	for(Node id: ids) {
+    		env.assign(id, result);
+    	}
+    	
+    	return Nil.getInstance();
     }
 }

@@ -190,7 +190,7 @@ class BuiltIn extends Node {
     }
     
     public Node equiv(IntLit x, IntLit y) {
-    	return BooleanLit.getInstance(x == y);
+    	return BooleanLit.getInstance(x.getVal() == y.getVal());
     }
     
     public Node isLess(IntLit x, IntLit y) {
