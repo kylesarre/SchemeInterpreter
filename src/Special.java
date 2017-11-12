@@ -8,12 +8,12 @@ abstract class Special {
     abstract void print(Node t, int n, boolean p);
     
     //TODO: implement eval for all of the special keywords
-    // Define
+    // Define - implemented
     // If
     // Begin
     // Set
     // Let
-    // Closure
+    // Closure - implemented
     // Quote - Implemented
     public Node eval(Node node, Environment env) throws Exception {
     	throw new Exception("Error: not a valid expression.");

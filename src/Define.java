@@ -17,7 +17,7 @@ class Define extends Special {
     public Node eval(Node node, Environment env) throws Exception{
     	// need to create a mapping between the fun name and lambda expression and bind to the current environment
     	Node fSpec = node.getCdr().getCar();
-    	Node fBody = node.getCdr().getCdr();
+    	Node fBody = node.getCdr().getCdr().getCar();
     	Node fParams = Nil.getInstance();
     	Node fName = Nil.getInstance();
     	
@@ -39,7 +39,12 @@ class Define extends Special {
 	    	Closure c = new Closure(lam, env);
 	    	
 	    	//now we have the closure and the variable, so lets bind the resulting association list with our environment
-	    	env.define(fName, c);
+	    	if(fSpec.isSymbol()) {
+	    		env.define(fName, fBody.eval(env));
+	    	}
+	    	else {
+	    		env.define(fName, c);
+	    	}
 	    	
 	    	// define doesn't actually return anything, so we return Nil for now
 	    	return Nil.getInstance();
