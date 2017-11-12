@@ -9,8 +9,8 @@ abstract class Special {
     
     //TODO: implement eval for all of the special keywords
     // Define - implemented
-    // If
-    // Begin
+    // If - implemented
+    // Begin - implemented
     // Set
     // Let
     // Closure - implemented
@@ -19,4 +19,3 @@ abstract class Special {
     	throw new Exception("Error: not a valid expression.");
     }
 }
-

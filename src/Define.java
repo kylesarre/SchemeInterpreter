@@ -40,7 +40,10 @@ class Define extends Special {
 	    	
 	    	//now we have the closure and the variable, so lets bind the resulting association list with our environment
 	    	if(fSpec.isSymbol()) {
-	    		env.define(fName, fBody.eval(env));
+	    		if(fBody.isNull())
+	    			env.define(fName, fBody);
+	    		else
+	    			env.define(fName, fBody.eval(env));
 	    	}
 	    	else {
 	    		env.define(fName, c);

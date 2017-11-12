@@ -22,7 +22,7 @@ class Regular extends Special {
     		return exp.getCar().eval(env).apply(Helpers.evalArgs(exp.getCdr(), env));
     	}
     	else {
-    		throw new Exception("Error: not a valid expression.");
+    		return Nil.getInstance();
     	}
     }
 }

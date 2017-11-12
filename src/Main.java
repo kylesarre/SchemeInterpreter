@@ -57,7 +57,10 @@ public class Main {
 	for (Node exp = parser.parseExp(); exp != null; exp = parser.parseExp())
     {
 	  try {
-		  exp.eval(fileEnv).print(0);}
+		  if(exp.isNull())
+			  exp.print(0);
+		  else
+			  exp.eval(fileEnv).print(0);}
 	  catch(Exception e) {
 		  e.printStackTrace();
 		  System.out.println();

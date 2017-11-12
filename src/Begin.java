@@ -14,7 +14,19 @@ class Begin extends Special {
 
     }
     
-    public Node eval(Environment env, Node node) {
-    	return new Nil();
+    public Node eval(Node node, Environment env) throws Exception{
+    	if(node.getCdr().isNull()) {
+    		return node;
+    	}
+    	else {
+    		// evaluate every fn in the begin call
+        	Node result = Helpers.evalArgs(node.getCdr(), env);
+        	// grab the last result and return it
+        	while(!result.getCdr().isNull()) {
+        		result = result.getCdr();
+        	}
+        	return result.getCar();
+    	}
+    	
     }
 }

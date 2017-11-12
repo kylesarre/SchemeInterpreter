@@ -55,7 +55,9 @@ class Closure extends Node {
     		}   		
     		params = params.getCdr();
     	}
-    	
+    	if(body.isNull()) {
+    		return Nil.getInstance();
+    	}
     	return body.eval(frame);
     }
 }
