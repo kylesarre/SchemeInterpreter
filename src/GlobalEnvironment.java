@@ -36,10 +36,13 @@ public class GlobalEnvironment extends Environment{
 				"pair?", //implemented
 				"eq?", //implemented
 				"procedure?", //implemented
-				"read",
-				"write",
-				"display",
-				"load",
+				// IO/interpreter built-ins
+				"read", // implemented
+				"write", //implemented
+				"display", //needs further research
+				"load",  //implemented
+				"eval", //implemented
+				"apply",
 				"newline", //implemented
 				"interaction-environment", //implemented
 				"set-car!", //implemented

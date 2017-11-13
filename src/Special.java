@@ -16,7 +16,7 @@ abstract class Special {
     // Let - implemented
     // Closure - implemented
     // Quote - Implemented
-    // lambda
+    // lambda - implemented
     public Node eval(Node node, Environment env) throws Exception {
     	throw new Exception("Error: not a valid expression.");
     }

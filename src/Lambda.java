@@ -10,9 +10,9 @@ class Lambda extends Special {
     void print(Node t, int n, boolean p) {
     	  Printer.printLambda(t, n, p);
   	}
-    
-    public Node eval(Environment env, Node node) {
-    	return new Nil();
+    // constructs a closure that wraps around the lambda and stores the environment in which it was called
+    public Node eval(Node node, Environment env) {   	
+    	return (Node) new Closure(node, env);    	
     }
 
 }

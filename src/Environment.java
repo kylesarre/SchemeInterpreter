@@ -115,12 +115,12 @@ class Environment extends Node {
     	}
     }
 
-    public void assign (Node id, Node val) {
+    public void assign (Node id, Node val) throws Exception{
     	// You can use find() to get a list containing the value and
     	// then update the value using setCar()
     	Node value = find(id, scope);
     	if(value == null && env == null) {
-    		System.out.println("Error: undefined variable");
+    		throw new Exception("Error: undefined variable " + id.getName());
     	}
     	else if(value == null)
     		env.assign(id, val);

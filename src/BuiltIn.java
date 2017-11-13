@@ -1,3 +1,5 @@
+import java.io.*;
+
 // BuiltIn.java -- the data structure for function closures
 
 // Class BuiltIn is used for representing the value of built-in functions
@@ -87,6 +89,23 @@ class BuiltIn extends Node {
 			arg1.print(-1);
 			return new Nil();
 		}
+		else if("load".equals(symbol.getSymbol())) {
+			System.out.print("Test");
+			if(!arg1.isString()) {
+				throw new Exception("Error: expected StringLit. load failed.");
+			}
+			else {
+				String fName = ((StrLit)arg1).getStrVal();
+				InputStream br = new FileInputStream(fName);
+				Node root = new Parser(new Scanner(br)).parseExp();
+				return root.eval(GlobalEnvironment.getGlobalEnv());
+			}
+		}
+    	// not really sure what the difference between these two even are
+		else if("display".equals(symbol.getSymbol())) {
+			arg1.print(-1);
+			return new Nil();
+		}
 		else {
 			throw new Exception("Error: unsupported unary param built-in!");
 		}
@@ -130,6 +149,14 @@ class BuiltIn extends Node {
 		// this might work strangely since I was inconsistent about returning pointers to pre-existing objects vs creating new objects (like with nil)
 		else if("eq?".equals(symbol.getSymbol()))
 			return BooleanLit.getInstance(arg1 == arg2);
+		else if("eval".equals(symbol.getSymbol())) {
+			if(arg2 instanceof Environment) {
+				return arg1.eval((Environment)arg2);
+			}
+			else {
+				throw new Exception("Error: expected an environment.");
+			}
+		}
 		else {
 			throw new Exception("Error: unsupported binary param built-in!");
 		}
@@ -139,7 +166,10 @@ class BuiltIn extends Node {
 	public Node callZero() throws Exception{
 		if("read".equals(symbol.getSymbol())) {
 			// TODO: implement read
-			return new Nil();
+			Node root = new Parser(new Scanner(System.in)).parseExp();
+			if(!root.isNull())
+				return root;
+			return Nil.getInstance();
 		}
 		else if("newline".equals(symbol.getSymbol())) {
 			System.out.print("\n");
