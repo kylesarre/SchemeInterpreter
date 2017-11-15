@@ -10,7 +10,7 @@ class Cond extends Special {
     void print(Node t, int n, boolean p) { 
     	Printer.printCond(t, n, p);
     }
-    
+    // TODO: fix bug where where its possible for cond to attempt to eval nil (calls node's eval which throws an error).
     public Node eval(Node node, Environment env) throws Exception {
     	Node cList = node.getCdr();
     	
@@ -20,7 +20,9 @@ class Cond extends Special {
     			if(bExp.getCar().isSymbol()) {
     				String sym = ((Ident)(bExp.getCar())).getSymbol();
     				if("else".equals(sym)) {
-    					return bExp.getCdr().eval(env);
+    					if(bExp.getCdr().getCar().isNull())
+    	    				return Nil.getInstance();
+    					return bExp.getCdr().getCar().eval(env);
     				}
     				else {
     					throw new Exception("Error: expected else but found " + sym + ".");
@@ -29,6 +31,8 @@ class Cond extends Special {
     			else if(bExp.getCar().isPair()) {
     				Node result = bExp.getCar().eval(env);
     	    		if(result == BooleanLit.getInstance(true)) {
+    	    			if(bExp.getCdr().getCar().isNull())
+    	    				return Nil.getInstance();
     	    			return bExp.getCdr().getCar().eval(env);
     	    		}
     			}
@@ -40,8 +44,9 @@ class Cond extends Special {
     			if(bExp.getCar().isPair()) {
     				Node result = bExp.getCar().eval(env);
     	    		if(result == BooleanLit.getInstance(true)) {
-    	    			System.out.println(result == BooleanLit.getInstance(true));
-    	    			return bExp.getCdr().eval(env);
+    	    			if(bExp.getCdr().getCar().isNull())
+    	    				return Nil.getInstance();
+    	    			return bExp.getCdr().getCar().eval(env);
     	    		}
     			}
     			else {

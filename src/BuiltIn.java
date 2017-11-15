@@ -66,6 +66,8 @@ class BuiltIn extends Node {
 			return arg1.getCar();
 		}
 		else if("cdr".equals(symbol.getSymbol())) {
+			if(arg1.isNull())
+				throw new Exception("Error: tried to take cdr of Nil.");
 			return arg1.getCdr();
 		}
 		else if("pair?".equals(symbol.getSymbol())) {
