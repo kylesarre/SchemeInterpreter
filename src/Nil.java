@@ -20,4 +20,5 @@ class Nil extends Node {
   }
   
   public boolean isNull()   { return true; }
+  
 }

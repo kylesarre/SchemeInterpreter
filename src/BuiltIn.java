@@ -41,6 +41,21 @@ class BuiltIn extends Node {
     // to report an error.  It should be overwritten only in classes
     // BuiltIn and Closure.
     public Node apply (Node args) throws Exception{
+	    	if("apply".equals(symbol.getSymbol())){
+			if(Helpers.getLength(args) < 2)
+				throw new Exception("Error: argument list has length " + Helpers.getLength(args) + ". Unsupported length.");
+			else{
+				if(!args.getCar().isProcedure())
+					throw new Exception("Error: expected procedure but got non-procedure.");
+				else{
+					Node builtIn = GlobalEnvironment.globalEnv.lookup(args.getCar());
+					if(!fetchLastElement(args).isPair())
+						throw new Exception("Error: expected last arg to be list but got a non-list.");
+					return builtIn.apply(new Cons(fetchAllButLast(args),fetchAll(fetchLastElement(args))));
+				}					
+			}
+		}
+	    
 		if(Helpers.getLength(args) == 1)
 			return callUnary(args.getCar());
 		else if(Helpers.getLength(args) == 2) {
@@ -49,6 +64,9 @@ class BuiltIn extends Node {
 		else if(Helpers.getLength(args) == 0) {
 			return callZero();
 		}
+	    	//else if(Helpers.getLength(args) > 2){
+			//return callN(args);
+		//}
 		else {
 			throw new Exception("Error: argument list has length: " + Helpers.getLength(args) + ". Unsupported length.");
 		}	
@@ -66,6 +84,8 @@ class BuiltIn extends Node {
 			return arg1.getCar();
 		}
 		else if("cdr".equals(symbol.getSymbol())) {
+			if(arg1.isNull())
+				throw new Exception("Error: tried to take cdr of Nil.");
 			return arg1.getCdr();
 		}
 		else if("pair?".equals(symbol.getSymbol())) {
@@ -244,4 +264,52 @@ class BuiltIn extends Node {
     public Node isLess(IntLit x, IntLit y) {
     	return BooleanLit.getInstance(x.getVal() < y.getVal());
     }
+	// fetches datum from a cons node tree and returns a list whose elements are each datum
+	// helper function that 
+	public Node fetchAll(Node n){
+		if(!n.getCdr().isNull()){
+			if(n.getCar().isPair()){
+				return fetchAll(n.getCar());
+			}
+			else{
+				// car of n is data
+				return new Cons(n.getCar(), fetchAll(n.getCdr()));
+			}
+		}
+		else{
+			if(n.getCar().isPair()){
+				return fetchAll(n.getCar());
+			}
+			else{
+				// car of n is data and cdr is empty
+				return n;
+			}
+		}
+	}
+	
+	// fetches a pointer to the last element in a list
+	// helper function for fetchAll
+	public Node fetchLastElement(Node n){
+		if(!n.getCdr().isNull()){
+			return fetchLastElement(n.getCdr());
+		}
+		else{
+			return n;
+		}
+	}
+	
+	// fetches all elements of a list excluding the last element
+	// helper function for apply
+	public Node fetchAllButLast(Node n){
+		if(!n.getCdr().isNull()){
+			return Nil.getInstance();
+		}
+		else{
+			return new Cons(n.getCar(), fetchAllButLast(n.getCdr()));
+		}
+	}
+    //n-ary
+	
+	
+	
 }
