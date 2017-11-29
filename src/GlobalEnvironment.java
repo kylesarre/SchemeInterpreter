@@ -24,16 +24,24 @@ public class GlobalEnvironment extends Environment{
 		// define all of the default built ins
 		String[] builtIns = {
 				"+", //implemented
+				"b+", // for baumgartner's test cases
 				"-", //implemented
+				"b-",// for baumgartner's test cases
 				"*", //implemented
+				"b*", // for baumgartner's test cases
 				"/", //implemented
+				"b/", // for baumgartner's test cases
 				"=", //implemented
+				"b=", // for baumgartner's test cases
 				"<", //implemented
+				"b<", // for baumgartner's test cases
 				"car", //implemented
 				"cdr", //implemented
 				"cons", // implemented
 				"null?", //implemented
 				"pair?", //implemented
+				"symbol?", // not implemented
+				"number?", // not implemented
 				"eq?", //implemented
 				"procedure?", //implemented
 				// IO/interpreter built-ins

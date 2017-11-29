@@ -116,19 +116,37 @@ class BuiltIn extends Node {
 		if("+".equals(symbol.getSymbol())) {
     		return add(num(arg1), num(arg2));
     	}
+		else if("b+".equals(symbol.getSymbol())) {
+    		return add(num(arg1), num(arg2));
+    	}
     	else if("-".equals(symbol.getSymbol())) {
+    		return sub(num(arg1), num(arg2));
+    	}
+    	else if("b-".equals(symbol.getSymbol())) {
     		return sub(num(arg1), num(arg2));
     	}
     	else if("*".equals(symbol.getSymbol())) {
     		return mul(num(arg1), num(arg2));
     	}
+    	else if("b*".equals(symbol.getSymbol())) {
+    		return mul(num(arg1), num(arg2));
+    	}
 		else if("/".equals(symbol.getSymbol())) {
+			return intDiv(num(arg1), num(arg2));
+		}
+		else if("b/".equals(symbol.getSymbol())) {
 			return intDiv(num(arg1), num(arg2));
 		}
 		else if("=".equals(symbol.getSymbol())) {
 			return equiv(num(arg1), num(arg2));
 		}
+		else if("b=".equals(symbol.getSymbol())) {
+			return equiv(num(arg1), num(arg2));
+		}
 		else if("<".equals(symbol.getSymbol())) {
+			return isLess(num(arg1), num(arg2));
+		}
+		else if("b<".equals(symbol.getSymbol())) {
 			return isLess(num(arg1), num(arg2));
 		}
 		else if("cons".equals(symbol.getSymbol())) {
