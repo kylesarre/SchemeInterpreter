@@ -1,12 +1,16 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 // singleton pattern
 public class GlobalEnvironment extends Environment{
 
 	public static Environment globalEnv = null;
 	
-	// constructs the builtIn environment, then wraps it with the file environment
+	// constructs the builtIn environment, extends the built in with ini.scm, then wraps the resultant environment with the file environment
 	private GlobalEnvironment() {		
 		Environment builtIn = new Environment();
 		initBuiltIn(builtIn);
+		loadIni(builtIn);
 		globalEnv = new Environment(builtIn);
 	}
 	
@@ -60,6 +64,26 @@ public class GlobalEnvironment extends Environment{
 				"string?"};
 		for(String s: builtIns) {
 			builtIn.define(new Ident(s), new BuiltIn(new Ident(s)));
+		}
+	}
+	
+	public void loadIni(Environment env){
+		String fName = "ini.scm";
+		try {
+			Node root = new Parser(new Scanner(new FileInputStream(fName))).parseExp();
+			try {
+				root.eval(env);
+			}
+			catch(Exception e) {
+				System.err.println("Error: error encountered when trying to load definitions from ini.scm.");
+				e.printStackTrace();
+				System.err.println("Skipping ini.scm...");
+				
+			}
+		}
+		catch(FileNotFoundException e) {
+			e.printStackTrace();
+			System.err.println("Skipping ini.scm...");
 		}
 	}
 }
