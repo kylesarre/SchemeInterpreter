@@ -177,6 +177,11 @@ class BuiltIn extends Node {
 				throw new Exception("Error: expected arg1 and arg2 to be strings but one wasn't.");
 			}
 		}
+		else if("symbol=?".equals(symbol.getSymbol())) {
+			Ident s1 = (Ident)arg1;
+			Ident s2 = (Ident)arg2; 
+			return BooleanLit.getInstance(s1.getSymbol().equals(s2.getSymbol()));
+		}
 		else if("<".equals(symbol.getSymbol())) {
 			return isLess(num(arg1), num(arg2));
 		}

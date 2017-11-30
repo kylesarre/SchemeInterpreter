@@ -25,10 +25,21 @@ class If extends Special {
     		throw new Exception("Error: error on if statement. Expected a boolean value but got " + result.getName() +".");
     	
     	if(BooleanLit.getInstance(true) == result) {
-    		return alt1.eval(env);
+    		if(alt1.isPair()) {
+    			return alt1.eval(env);
+    		}
+    		else {
+    			return alt1;
+    		}
+    		
     	}
     	else {
-    		return alt2.eval(env);
+    		if(alt1.isPair()) {
+    			return alt2.eval(env);
+    		}
+    		else {
+    			return alt2;
+    		}
     	}
     }
 }

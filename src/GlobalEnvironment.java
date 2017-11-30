@@ -45,6 +45,7 @@ public class GlobalEnvironment extends Environment{
 				"null?", //implemented
 				"pair?", //implemented
 				"symbol?", // implemented
+				"symbol=?", // implemented
 				"number?", // implemented
 				"eq?", //implemented
 				"procedure?", //implemented
@@ -60,8 +61,8 @@ public class GlobalEnvironment extends Environment{
 				"set-car!", //implemented
 				"set-cdr!", //implemented
 				// for project 3
-				"string=?",
-				"string?"};
+				"string=?", //implemented
+				"string?"}; //implemented
 		for(String s: builtIns) {
 			builtIn.define(new Ident(s), new BuiltIn(new Ident(s)));
 		}
@@ -70,15 +71,20 @@ public class GlobalEnvironment extends Environment{
 	public void loadIni(Environment env){
 		String fName = "ini.scm";
 		try {
-			Node root = new Parser(new Scanner(new FileInputStream(fName))).parseExp();
-			try {
-				root.eval(env);
+			Parser p = new Parser(new Scanner(new FileInputStream(fName)));
+			try {				
+				for(Node exp = p.parseExp(); exp != null; exp = p.parseExp()) {
+					if(exp.isNull())
+						exp.print(0);
+					else {
+						exp.eval(env);
+					}
+				}
 			}
 			catch(Exception e) {
 				System.err.println("Error: error encountered when trying to load definitions from ini.scm.");
 				e.printStackTrace();
-				System.err.println("Skipping ini.scm...");
-				
+				System.err.println("Skipping ini.scm...");				
 			}
 		}
 		catch(FileNotFoundException e) {
