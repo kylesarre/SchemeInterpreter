@@ -58,6 +58,8 @@ class Closure extends Node {
     	if(body.isNull()) {
     		return Nil.getInstance();
     	}
-    	return body.eval(frame);
+    	else {
+    		return body.eval(frame);
+    	}   	
     }
 }

@@ -24,4 +24,13 @@ public class Helpers {
     		return new Nil();
     	}
 	}
+	// takes two lists and concatenates them together 
+	// (the root of l2 will replace the most shallow Nil of L1)
+	public static Node listAppend(Node l1, Node l2) {
+		Node curP = l1;
+		while(!curP.getCdr().isNull())
+			curP = l1.getCdr();
+		curP.setCdr(l2);
+		return l1;
+	}
 }

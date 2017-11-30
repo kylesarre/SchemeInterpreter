@@ -40,8 +40,8 @@ public class GlobalEnvironment extends Environment{
 				"cons", // implemented
 				"null?", //implemented
 				"pair?", //implemented
-				"symbol?", // not implemented
-				"number?", // not implemented
+				"symbol?", // implemented
+				"number?", // implemented
 				"eq?", //implemented
 				"procedure?", //implemented
 				// IO/interpreter built-ins
@@ -50,11 +50,14 @@ public class GlobalEnvironment extends Environment{
 				"display", //needs further research
 				"load",  //implemented
 				"eval", //implemented
-				"apply",
+				"apply", // implemented
 				"newline", //implemented
 				"interaction-environment", //implemented
 				"set-car!", //implemented
-				"set-cdr!"}; //implemented
+				"set-cdr!", //implemented
+				// for project 3
+				"string=?",
+				"string?"};
 		for(String s: builtIns) {
 			builtIn.define(new Ident(s), new BuiltIn(new Ident(s)));
 		}

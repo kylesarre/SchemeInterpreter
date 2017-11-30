@@ -41,35 +41,37 @@ class BuiltIn extends Node {
     // to report an error.  It should be overwritten only in classes
     // BuiltIn and Closure.
     public Node apply (Node args) throws Exception{
-	    	if("apply".equals(symbol.getSymbol())){
+	    if("apply".equals(symbol.getSymbol())){
 			if(Helpers.getLength(args) < 2)
 				throw new Exception("Error: argument list has length " + Helpers.getLength(args) + ". Unsupported length.");
 			else{
 				if(!args.getCar().isProcedure())
 					throw new Exception("Error: expected procedure but got non-procedure.");
 				else{
-					Node builtIn = GlobalEnvironment.globalEnv.lookup(args.getCar());
+					System.out.println("fetching procedure");
 					if(!fetchLastElement(args).isPair())
-						throw new Exception("Error: expected last arg to be list but got a non-list.");
-					return builtIn.apply(new Cons(fetchAllButLast(args),fetchAll(fetchLastElement(args))));
+						throw new Exception("Error: expected last arg to be list but got an atom.");
+					Helpers.listAppend(fetchAllButLast(args.getCdr()), fetchLastElement(args)).print(0);
+					return args.getCar().apply(Helpers.listAppend(fetchAllButLast(args.getCdr()), fetchLastElement(args)));
 				}					
 			}
 		}
-	    
-		if(Helpers.getLength(args) == 1)
-			return callUnary(args.getCar());
-		else if(Helpers.getLength(args) == 2) {
-			return callBinary(args.getCar(), args.getCdr().getCar());
-		}
-		else if(Helpers.getLength(args) == 0) {
-			return callZero();
-		}
-	    	//else if(Helpers.getLength(args) > 2){
-			//return callN(args);
-		//}
 		else {
-			throw new Exception("Error: argument list has length: " + Helpers.getLength(args) + ". Unsupported length.");
-		}	
+			if(Helpers.getLength(args) == 1)
+				return callUnary(args.getCar());
+			else if(Helpers.getLength(args) == 2) {
+				return callBinary(args.getCar(), args.getCdr().getCar());
+			}
+			else if(Helpers.getLength(args) == 0) {
+				return callZero();
+			}
+		    	//else if(Helpers.getLength(args) > 2){
+				//return callN(args);
+			//}
+			else {
+				throw new Exception("Error: argument list has length: " + Helpers.getLength(args) + ". Unsupported length.");
+			}
+	    }
     }
     
     // all of our built ins for single parameter procedures
@@ -105,12 +107,14 @@ class BuiltIn extends Node {
 		}
 		else if("pair?".equals(symbol.getSymbol()))
 			return BooleanLit.getInstance(arg1.isPair());
+		else if("string?".equals(symbol.getSymbol())) {
+			return BooleanLit.getInstance(arg1.isString());
+		}
 		else if("write".equals(symbol.getSymbol())) {
 			arg1.print(-1);
 			return new Nil();
 		}
 		else if("load".equals(symbol.getSymbol())) {
-			System.out.print("Test");
 			if(!arg1.isString()) {
 				throw new Exception("Error: expected StringLit. load failed.");
 			}
@@ -162,6 +166,16 @@ class BuiltIn extends Node {
 		}
 		else if("b=".equals(symbol.getSymbol())) {
 			return equiv(num(arg1), num(arg2));
+		}
+		else if("string=?".equals(symbol.getSymbol())) {
+			if(arg1.isString() && arg2.isString()) {
+				StrLit s1 = (StrLit)arg1;
+				StrLit s2 = (StrLit)arg2;
+				return BooleanLit.getInstance(s1.getStrVal().equals(s2.getStrVal()));
+			}
+			else {
+				throw new Exception("Error: expected arg1 and arg2 to be strings but one wasn't.");
+			}
 		}
 		else if("<".equals(symbol.getSymbol())) {
 			return isLess(num(arg1), num(arg2));
@@ -294,14 +308,14 @@ class BuiltIn extends Node {
 			return fetchLastElement(n.getCdr());
 		}
 		else{
-			return n;
+			return n.getCar();
 		}
 	}
 	
 	// fetches all elements of a list excluding the last element
 	// helper function for apply
 	public Node fetchAllButLast(Node n){
-		if(!n.getCdr().isNull()){
+		if(n.getCdr().isNull()){
 			return Nil.getInstance();
 		}
 		else{
