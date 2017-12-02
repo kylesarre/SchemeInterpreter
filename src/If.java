@@ -20,7 +20,6 @@ class If extends Special {
     	Node alt1 = node.getCdr().getCdr().getCar();
     	Node alt2 = node.getCdr().getCdr().getCdr().getCar();
     	Node result = boolExp.eval(env);
-    	
     	if(!result.isBoolean())
     		throw new Exception("Error: error on if statement. Expected a boolean value but got " + result.getName() +".");
     	

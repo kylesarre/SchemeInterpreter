@@ -210,7 +210,11 @@ class BuiltIn extends Node {
 		}
 		// this might work strangely since I was inconsistent about returning pointers to pre-existing objects vs creating new objects (like with nil)
 		else if("eq?".equals(symbol.getSymbol()))
+		{
+			arg1.print(0);arg2.print(0);
+			System.out.print(arg1 == arg2);
 			return BooleanLit.getInstance(arg1 == arg2);
+		}
 		else if("eval".equals(symbol.getSymbol())) {
 			if(arg2 instanceof Environment) {
 				return arg1.eval((Environment)arg2);
