@@ -86,7 +86,7 @@
     ((b= (car args) (car (cdr args))) (apply = (cdr args)))
   )
 )
-(define (< . args) 
+(define (< . args)
   (cond
     ((null? args) #t)
     ((null? (cdr args)) #t)

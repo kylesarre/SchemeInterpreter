@@ -48,11 +48,12 @@ class BuiltIn extends Node {
 				if(!args.getCar().isProcedure())
 					throw new Exception("Error: expected procedure but got non-procedure.");
 				else{
-					System.out.println("fetching procedure");
 					if(!fetchLastElement(args).isPair())
 						throw new Exception("Error: expected last arg to be list but got an atom.");
-					Helpers.listAppend(fetchAllButLast(args.getCdr()), fetchLastElement(args)).print(0);
-					return args.getCar().apply(Helpers.listAppend(fetchAllButLast(args.getCdr()), fetchLastElement(args)));
+					if(fetchAllButLast(args.getCdr()).isNull())
+						return args.getCar().apply(fetchLastElement(args));
+					else					
+						return args.getCar().apply(Helpers.listAppend(fetchAllButLast(args.getCdr()), fetchLastElement(args)));
 				}					
 			}
 		}
