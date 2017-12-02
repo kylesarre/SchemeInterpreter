@@ -65,7 +65,6 @@ class BuiltIn extends Node {
 			if(Helpers.getLength(args) == 1)
 				return callUnary(args.getCar());
 			else if(Helpers.getLength(args) == 2) {
-				args.print(0);
 				return callBinary(args.getCar(), args.getCdr().getCar());
 			}
 			else if(Helpers.getLength(args) == 0) {

@@ -54,7 +54,6 @@ class Define extends Special {
     		// construct the required lambda using fParams and fBody:
 	    	//(lambda (fParams) (fBody))
 	    	Node lam = new Cons(new Ident("lambda"), new Cons(fParams, new Cons(fBody, Nil.getInstance())));
-	    	lam.print(0);
 	    	// we now have the env where the lambda was defined, the variable of the lambda, and the lambda itself, so now we can construct our closure
 	    	Closure c = new Closure(lam, env);
 	    	
