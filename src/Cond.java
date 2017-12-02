@@ -13,16 +13,19 @@ class Cond extends Special {
     // TODO: fix bug where where its possible for cond to attempt to eval nil (calls node's eval which throws an error).
     public Node eval(Node node, Environment env) throws Exception {
     	Node cList = node.getCdr();
-    	
     	while(!cList.isNull()) {
     		Node bExp = cList.getCar();
     		if(cList.getCdr().isNull()) {
+    			bExp.print(0);
     			if(bExp.getCar().isSymbol()) {
     				String sym = ((Ident)(bExp.getCar())).getSymbol();
     				if("else".equals(sym)) {
     					if(bExp.getCdr().getCar().isNull())
     	    				return Nil.getInstance();
-    					return bExp.getCdr().getCar().eval(env);
+    					else if(!bExp.getCdr().getCar().isPair())
+    						return bExp.getCdr().getCar();
+    					else
+    						return bExp.getCdr().getCar().eval(env);
     				}
     				else {
     					throw new Exception("Error: expected else but found " + sym + ".");
@@ -46,7 +49,10 @@ class Cond extends Special {
     	    		if(result == BooleanLit.getInstance(true)) {
     	    			if(bExp.getCdr().getCar().isNull())
     	    				return Nil.getInstance();
-    	    			return bExp.getCdr().getCar().eval(env);
+    	    			else if(!bExp.getCdr().getCar().isPair())
+    	    				return bExp.getCdr().getCar();
+    	    			else
+    	    				return bExp.getCdr().getCar().eval(env);
     	    		}
     			}
     			else {
