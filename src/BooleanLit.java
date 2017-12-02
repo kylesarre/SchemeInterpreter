@@ -32,4 +32,7 @@ class BooleanLit extends Node {
 
   public boolean isBoolean()   { return true; }
 
+	public Node eval(Environment e) {
+		return this;
+	}
 }

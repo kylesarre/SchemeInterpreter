@@ -16,7 +16,6 @@ class Cond extends Special {
     	while(!cList.isNull()) {
     		Node bExp = cList.getCar();
     		if(cList.getCdr().isNull()) {
-    			bExp.print(0);
     			if(bExp.getCar().isSymbol()) {
     				String sym = ((Ident)(bExp.getCar())).getSymbol();
     				if("else".equals(sym)) {
@@ -34,9 +33,13 @@ class Cond extends Special {
     			else if(bExp.getCar().isPair()) {
     				Node result = bExp.getCar().eval(env);
     	    		if(result == BooleanLit.getInstance(true)) {
+    	    			bExp.print(0);
     	    			if(bExp.getCdr().getCar().isNull())
     	    				return Nil.getInstance();
-    	    			return bExp.getCdr().getCar().eval(env);
+    	    			else if(!bExp.getCdr().getCar().isPair()) 
+    	    				return bExp.getCdr().getCar();
+    	    			else
+    	    				return bExp.getCdr().getCar().eval(env);
     	    		}
     			}
     			else {
