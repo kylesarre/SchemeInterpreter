@@ -45,16 +45,21 @@ class Closure extends Node {
     	//TODO: bugfix this function body. somehow the correct arg list is surrounded by another cons which is causing error: not a valid procedure to occur.
     	// must have made an error during construction of the lambda
     	Node body = fun.getCdr().getCdr().getCar(); // lambda body
-    	while(!params.isNull()) {
-    		if(!args.isNull()) {
-    			frame.define(params.getCar(), args.getCar()); // bind arg to param
-    			args = args.getCdr(); // move pointer to next arg
-    		}
-    		else {
-    			frame.define(params.getCar(), new Nil()); // bind nil to arg (throws exception if evaluated: declared but not initialized)
-    		}   		
-    		params = params.getCdr();
+    	if(!params.isPair()) {
+    		frame.define(params, args);
     	}
+    	else {
+    		while(!params.isNull()) {
+        		if(!args.isNull()) {
+        			frame.define(params.getCar(), args.getCar()); // bind arg to param
+        			args = args.getCdr(); // move pointer to next arg
+        		}
+        		else {
+        			frame.define(params.getCar(), new Nil()); // bind nil to arg (throws exception if evaluated: declared but not initialized)
+        		}   		
+        		params = params.getCdr();
+        	}
+    	}    	
     	if(body.isNull()) {
     		return Nil.getInstance();
     	}

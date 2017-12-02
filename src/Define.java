@@ -27,6 +27,26 @@ class Define extends Special {
     			fParams = Nil.getInstance();
     		}
     		else {
+    			if(fSpec.getCdr().isPair())
+    			{
+    				// must be of the form (<variable> <formals>)
+    				fName = fSpec.getCar();
+    				fParams = fSpec.getCdr();
+    			}
+    			else if(fSpec.getCdr().isNull()) {
+    				// must be of the form (<variable>)
+    				fName = fSpec.getCar();
+    				fParams = Nil.getInstance();
+    			}
+    			else {
+    				// must be of the form (<variable> . <formal>)
+    				if(fSpec.getCdr().isSymbol()) {
+    					fParams = fSpec.getCdr();
+    				}
+    				else {
+    					throw new Exception("Error: expected a symbol but got " + fSpec.getCdr().getName());
+    				}
+    			}
     			fName = fSpec.getCar();
     	    	fParams = fSpec.getCdr();   	    	    	    	
     		}
@@ -34,7 +54,7 @@ class Define extends Special {
     		// construct the required lambda using fParams and fBody:
 	    	//(lambda (fParams) (fBody))
 	    	Node lam = new Cons(new Ident("lambda"), new Cons(fParams, new Cons(fBody, Nil.getInstance())));
-	    	
+	    	lam.print(0);
 	    	// we now have the env where the lambda was defined, the variable of the lambda, and the lambda itself, so now we can construct our closure
 	    	Closure c = new Closure(lam, env);
 	    	
